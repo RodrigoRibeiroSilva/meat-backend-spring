@@ -1,6 +1,10 @@
 package com.rodrigor.meat.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Review extends BaseObject{
@@ -9,15 +13,21 @@ public class Review extends BaseObject{
 	private String name, date, comments;
 	private Double rating;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="restaurantId")
+	private Restaurant restaurant;
+	
 	public Review() {
 		
 	}
 
-	public Review(String name, String date, String comments, Double rating) {
+	public Review(String name, String date, String comments, Double rating, Restaurant restaurant) {
 		this.name = name;
 		this.date = date;
 		this.comments = comments;
 		this.rating = rating;
+		this.restaurant = restaurant;
 	}
 
 	public String getName() {

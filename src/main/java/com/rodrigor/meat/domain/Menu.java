@@ -3,6 +3,10 @@ package com.rodrigor.meat.domain;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Menu extends BaseObject {
@@ -11,15 +15,21 @@ public class Menu extends BaseObject {
 	private String imagePath, name, description;
 	private BigDecimal price;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="restaurantId")
+	private Restaurant restaurant;
+	
 	public Menu() {
 		
 	}
 
-	public Menu(String imagePath, String name, String description, BigDecimal price) {
+	public Menu(String imagePath, String name, String description, BigDecimal price, Restaurant restaurant) {
 		this.imagePath = imagePath;
 		this.name = name;
 		this.description = description;
 		this.price = price;
+		this.restaurant = restaurant;
 	}
 
 	public String getImagePath() {
