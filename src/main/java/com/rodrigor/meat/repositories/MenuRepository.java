@@ -1,7 +1,7 @@
 package com.rodrigor.meat.repositories;
 
-import com.rodrigor.meat.domain.Menu;
+import com.rodrigor.meat.domain.MenuItem;
 
-public interface MenuRepository extends GenericRepository<Menu>{
+public interface MenuRepository extends GenericRepository<MenuItem>{
 
 }

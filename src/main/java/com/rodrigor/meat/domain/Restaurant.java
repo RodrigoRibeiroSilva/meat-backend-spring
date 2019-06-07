@@ -21,7 +21,7 @@ public class Restaurant extends BaseObject {
 	private List<Review> reviews = new LinkedList<Review>();
 	
 	@OneToMany(mappedBy="restaurant", cascade=CascadeType.ALL)
-	private Collection<Menu> menuList = new HashSet<Menu>();
+	private Collection<MenuItem> menu = new HashSet<MenuItem>();
 	
 	public Restaurant() {
 		
@@ -97,16 +97,16 @@ public class Restaurant extends BaseObject {
 		return Collections.unmodifiableList(reviews);
 	}
 
-	public Collection<Menu> getMenuList() {
-		return Collections.unmodifiableCollection(menuList);
+	public Collection<MenuItem> getMenuList() {
+		return Collections.unmodifiableCollection(menu);
 	}
 	
 	public void addReview(Review review) {
 		reviews.add(review);
 	}
 	
-	public void addMenuItem(Menu menu) {
-		menuList.add(menu);
+	public void addMenuItem(MenuItem menuItem) {
+		menu.add(menuItem);
 	}
 
 	@Override

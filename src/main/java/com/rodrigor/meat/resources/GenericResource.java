@@ -1,6 +1,5 @@
 package com.rodrigor.meat.resources;
 
-import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rodrigor.meat.domain.BaseObject;
 import com.rodrigor.meat.services.GenericService;
@@ -33,15 +31,17 @@ public class GenericResource<E extends BaseObject> {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody E entity) {
+	public ResponseEntity<E> insert(@Valid @RequestBody E entity) {
 		service.insert(entity);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entity.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entity.getId()).toUri();
+		return ResponseEntity.ok().body(entity);
+
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public E update(@PathVariable(value = "id") Integer id, @RequestBody E entity) {
-		return service.update(entity, id);
+	public ResponseEntity<E> update(@PathVariable(value = "id") Integer id, @RequestBody E entity) {
+		service.update(entity, id);
+		return ResponseEntity.ok().body(entity);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)

@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Menu extends BaseObject {
+public class MenuItem extends BaseObject {
 	private static final long serialVersionUID = 1L;
 	
 	private String imagePath, name, description;
@@ -20,11 +20,11 @@ public class Menu extends BaseObject {
 	@JoinColumn(name="restaurantId")
 	private Restaurant restaurant;
 	
-	public Menu() {
+	public MenuItem() {
 		
 	}
 
-	public Menu(String imagePath, String name, String description, BigDecimal price, Restaurant restaurant) {
+	public MenuItem(String imagePath, String name, String description, BigDecimal price, Restaurant restaurant) {
 		this.imagePath = imagePath;
 		this.name = name;
 		this.description = description;
@@ -66,7 +66,7 @@ public class Menu extends BaseObject {
 
 	@Override
 	public String toString() {
-		return "Menu [imagePath=" + imagePath + ", name=" + name + ", description=" + description + ", price=" + price
+		return "MenuItem [imagePath=" + imagePath + ", name=" + name + ", description=" + description + ", price=" + price
 				+ "]";
 	}
 }
