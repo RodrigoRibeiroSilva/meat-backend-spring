@@ -9,13 +9,16 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rodrigor.meat.domain.enums.Profile;
 
 @Entity
 public class Client extends BaseObject{
 	private static final long serialVersionUID = 1L;
 	
-	private String name, email, address, number, optionalAddress, password;
+	private String name, email, address, number, optionalAddress;
+	@JsonIgnore
+	private String password;
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILE")

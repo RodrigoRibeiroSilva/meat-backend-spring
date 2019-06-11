@@ -36,10 +36,9 @@ private AuthenticationManager authenticationManager;
                                                 HttpServletResponse res) throws AuthenticationException {
 
 		try {
-			CredentialsDTO creds = new ObjectMapper()
-	                .readValue(req.getInputStream(), CredentialsDTO.class);
+			CredentialsDTO creds = new ObjectMapper().readValue(req.getInputStream(), CredentialsDTO.class);
 	
-	        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha(), new ArrayList<>());
+	        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>());
 	        
 	        Authentication auth = authenticationManager.authenticate(authToken);
 	        return auth;

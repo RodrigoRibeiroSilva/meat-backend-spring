@@ -25,7 +25,7 @@ public class DbServiceTest {
 	@Autowired
 	private RestaurantRepository restRepo;
 	@Autowired
-	private ClientRepository clientRepo;
+	private ClientService clientService;
 	
 	
 	public void instantiateTestDatabase() throws ParseException {
@@ -46,6 +46,6 @@ public class DbServiceTest {
 		menuRepo.save(menu);
 		
 		Client teste = new Client("Rodrigo Ribeiro", "teste@teste.com","Av. Joaquim Ribeiro, 800", "545454", "", "123");
-		clientRepo.save(teste);
+		clientService.insert(teste);
 	}
 }

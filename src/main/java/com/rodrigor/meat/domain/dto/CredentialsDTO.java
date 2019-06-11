@@ -1,6 +1,8 @@
 package com.rodrigor.meat.domain.dto;
 
-public class CredentialsDTO {
+import java.io.Serializable;
+
+public class CredentialsDTO implements Serializable {
 private static final long serialVersionUID = 1L;
 	
 	private String email;
@@ -23,7 +25,7 @@ private static final long serialVersionUID = 1L;
 		this.email = email;
 	}
 
-	public String getSenha() {
+	public String getPassword() {
 		return password;
 	}
 
