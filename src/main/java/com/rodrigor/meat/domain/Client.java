@@ -1,13 +1,18 @@
 package com.rodrigor.meat.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rodrigor.meat.domain.enums.Profile;
@@ -16,10 +21,22 @@ import com.rodrigor.meat.domain.enums.Profile;
 public class Client extends BaseObject{
 	private static final long serialVersionUID = 1L;
 	
-	private String name, email, address, number, optionalAddress;
+	private String name, email;
 	@JsonIgnore
 	private String password;
 	
+	@OneToOne
+	private Address activatedAddress;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
+	private List<Address> addressList = new ArrayList<Address>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="client")
+	private List<OrderPurchase> orderList = new ArrayList<OrderPurchase>();
+	
+	@JsonIgnore
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILE")
 	private Set<Integer> profiles = new HashSet<>();
@@ -28,15 +45,47 @@ public class Client extends BaseObject{
 		addProfile(Profile.CLIENT);
 	}
 
-	public Client(String name, String email, String address, String number,
-			String optionalAddress, String password) {
+	public Client(String name, String email, Address address, String password) {
 		this.name = name;
 		this.email = email;
-		this.address = address;
-		this.number = number;
-		this.optionalAddress = optionalAddress;
+		this.addressList.add(address);
 		this.setPassword(password);
+		this.activatedAddress = this.addressList.get(0);
 		addProfile(Profile.CLIENT);
+	}
+	
+	
+
+	public Address getActivatedAddress() {
+		return activatedAddress;
+	}
+
+	public void setActivatedAddress(Address activatedAddress) {
+		this.activatedAddress = activatedAddress;
+	}
+
+	public List<Address> getAddressList() {
+		return addressList;
+	}
+
+	public void setAddressList(List<Address> addressList) {
+		this.addressList = addressList;
+	}
+
+	public List<OrderPurchase> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(List<OrderPurchase> orderList) {
+		this.orderList = orderList;
+	}
+
+	public Set<Integer> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(Set<Integer> profiles) {
+		this.profiles = profiles;
 	}
 
 	public String getName() {
@@ -55,30 +104,6 @@ public class Client extends BaseObject{
 		this.email = email;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getOptionalAddress() {
-		return optionalAddress;
-	}
-
-	public void setOptionalAddress(String optionalAddress) {
-		this.optionalAddress = optionalAddress;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -91,14 +116,13 @@ public class Client extends BaseObject{
 		profiles.add(profile.getId());
 	}
 	
-	public Set<Profile> getProfile(){
-		return profiles.stream().map(perfil -> Profile.toEnum(perfil)).collect(Collectors.toSet());
+	
+	public void addAddressList(Address address) {
+		addressList.add(address);
 	}
 	
-	@Override
-	public String toString() {
-		return "Client [name=" + name + ", email=" + email + ", emailConfirmation="  + ", address="
-				+ address + ", number=" + number + ", optionalAddress=" + optionalAddress + "]";
+	public Set<Profile> getProfile(){
+		return profiles.stream().map(perfil -> Profile.toEnum(perfil)).collect(Collectors.toSet());
 	}
 
 }
