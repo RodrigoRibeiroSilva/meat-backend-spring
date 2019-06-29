@@ -13,22 +13,22 @@ public class BaseObject implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
+	protected Long id;
 	
 	public BaseObject() {
 		
 	}
 	
-	public BaseObject(Integer id) {
+	public BaseObject(Long id) {
 		this.id = id;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
