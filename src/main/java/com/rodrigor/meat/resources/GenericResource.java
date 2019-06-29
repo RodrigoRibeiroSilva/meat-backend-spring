@@ -1,10 +1,10 @@
 package com.rodrigor.meat.resources;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,12 +24,13 @@ public class GenericResource<E extends BaseObject> {
 	protected GenericService<E> service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<E> list() {
-		return service.findAll();
+	public Page<E> list(Pageable pageable) {
+		Page<E> page = (Page<E>) service.findAll(pageable);
+		return page;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public E get(@PathVariable(value = "id") Integer id) {
+	public E get(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 
@@ -42,7 +43,7 @@ public class GenericResource<E extends BaseObject> {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public ResponseEntity<E> update(@PathVariable(value = "id") Integer id, @RequestBody E entity) {
+	public ResponseEntity<E> update(@PathVariable(value = "id") Long id, @RequestBody E entity) {
 		service.update(entity, id);
 		return ResponseEntity.ok().body(entity);
 	}
@@ -51,7 +52,7 @@ public class GenericResource<E extends BaseObject> {
 			@ApiResponse(code = 404, message = "Código inexistente") 
 	})
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable(value = "id") Integer id) {
+	public void delete(@PathVariable(value = "id") Long id) {
 		service.delete(id);
 	}
 }
