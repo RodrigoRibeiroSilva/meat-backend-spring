@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.rodrigor.meat.domain.BaseObject;
 import com.rodrigor.meat.services.GenericService;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 
 public class GenericResource<E extends BaseObject> {
 
@@ -43,7 +46,10 @@ public class GenericResource<E extends BaseObject> {
 		service.update(entity, id);
 		return ResponseEntity.ok().body(entity);
 	}
-
+	
+	@ApiResponses(value = {
+			@ApiResponse(code = 404, message = "Código inexistente") 
+	})
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(value = "id") Integer id) {
 		service.delete(id);

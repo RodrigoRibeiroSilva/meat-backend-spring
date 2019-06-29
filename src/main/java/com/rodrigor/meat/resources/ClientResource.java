@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rodrigor.meat.domain.Client;
 import com.rodrigor.meat.services.ClientService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/clients")
 public class ClientResource extends GenericResource<Client> {
@@ -20,6 +22,7 @@ public class ClientResource extends GenericResource<Client> {
 	private ClientService service;
 	
 	@Override
+	@ApiOperation(value="Insere um novo cliente")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Client> insert(@Valid @RequestBody Client entity) {
 		this.service.insert(entity);
